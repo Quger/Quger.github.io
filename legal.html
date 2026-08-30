@@ -1,63 +1,477 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Правовые документы — VoiceScribe</title>
-  <meta content="Политика конфиденциальности и условия использования сервиса VoiceScribe." name="description"/>
-  <meta content="#090312" name="theme-color"/>
-  <meta content="Правовые документы — VoiceScribe" property="og:title"/>
-  <meta content="Политика конфиденциальности и условия использования сервиса VoiceScribe." property="og:description"/>
-  <meta content="website" property="og:type"/>
-  <link href="https://fonts.googleapis.com" rel="preconnect"/>
-  <link crossorigin="anonymous" href="https://fonts.googleapis.com" rel="preconnect"/>
-  <link href="styles.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
-  <script defer src="site.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07000f;
+      --surface: rgba(120,60,200,0.07);
+      --border: rgba(160,100,255,0.15);
+      --accent: #a855f7;
+      --accent2: #7c3aed;
+      --text: #f0e8ff;
+      --muted: #9b8ab8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 10%, rgba(124,58,237,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 90% 90%, rgba(168,85,247,0.12) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(20px);
+      background: rgba(7,0,15,0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #e9d5ff, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent); }
+
+    .nav-legal {
+      background: rgba(168, 85, 247, 0.1) !important;
+      border: 1px solid rgba(168, 85, 247, 0.4) !important;
+      color: #e9d5ff !important;
+      padding: 0.42rem 0.9rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      animation: pulse-legal 2s infinite;
+    }
+    .nav-legal:hover {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    @keyframes pulse-legal {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(168, 85, 247, 0); }
+    }
+
+    /* ── ANIMATED BUTTON ── */
+    .nav-btn-animated {
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      color: #fff !important;
+      padding: .42rem .9rem;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      animation: pulse-purple 2s infinite;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-btn-animated:hover {
+      transform: translateY(-1px);
+      opacity: 0.9;
+    }
+    @keyframes pulse-purple {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.5); }
+      50% { box-shadow: 0 0 0 8px rgba(168, 85, 247, 0); }
+    }
+
+    /* ── WRAPPER ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 110px 1.5rem 80px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .page-tag {
+      display: inline-block;
+      background: rgba(168,85,247,0.15);
+      border: 1px solid rgba(168,85,247,0.3);
+      color: #c084fc;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .28rem .9rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.6s both;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #e9d5ff, #a855f7 55%, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -.02em;
+      margin-bottom: .8rem;
+      animation: fadeUp 0.6s 0.15s both;
+    }
+    .page-sub {
+      color: var(--muted);
+      font-size: .92rem;
+      animation: fadeUp 0.6s 0.2s both;
+    }
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      display: flex;
+      gap: .5rem;
+      background: rgba(120,60,200,0.08);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: .35rem;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.6s 0.3s both;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: .6rem 1rem;
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+    }
+    .tab-btn.active {
+      background: rgba(168,85,247,0.2);
+      border: 1px solid rgba(168,85,247,0.35);
+      color: #e9d5ff;
+      box-shadow: 0 2px 12px rgba(124,58,237,0.2);
+    }
+    .tab-btn:not(.active):hover {
+      color: var(--text);
+      background: rgba(168,85,247,0.07);
+      transform: translateY(-1px);
+    }
+    .tab-btn.active:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+    }
+
+    /* ── DOC CARD ── */
+    .doc-card {
+      background: rgba(15,5,30,0.75);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2.2rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 0 50px rgba(124,58,237,0.1), 0 1px 0 rgba(168,85,247,0.07) inset;
+      animation: fadeUp 0.6s 0.4s both;
+    }
+
+    /* doc sections */
+    .doc-section { margin-bottom: 2rem; }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .doc-section h3::before {
+      content: '';
+      width: 3px;
+      height: 1.1em;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .doc-section p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 0.6rem;
+    }
+    .doc-section p:last-child { margin-bottom: 0; }
+
+    .doc-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0;
+    }
+    .doc-section ul li {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      padding-left: 1.3rem;
+      position: relative;
+      margin-bottom: 0.35rem;
+    }
+    .doc-section ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0.3rem;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .doc-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+      opacity: 0.65;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(160,100,255,0.1);
+      letter-spacing: 0.04em;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(168,85,247,0.2), transparent);
+      margin: 1.8rem 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      line-height: 1.8;
+    }
+    .footer-main {
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 0.3rem;
+    }
+    .footer-disclaimer {
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* ── LANGUAGE & TAB VISIBILITY ── */
+    [data-lang] { display: none; }
+    body.lang-ru div[data-lang="ru"],
+    body.lang-en div[data-lang="en"],
+    body.lang-de div[data-lang="de"],
+    body.lang-it div[data-lang="it"],
+    body.fallback-lang-en div[data-lang="en"] { 
+      display: block; 
+      animation: fadeIn 0.5s ease-out;
+    }
+    /* inline spans */
+    body.lang-ru span[data-lang="ru"],
+    body.lang-en span[data-lang="en"],
+    body.lang-de span[data-lang="de"],
+    body.lang-it span[data-lang="it"],
+    body.fallback-lang-en span[data-lang="en"] { 
+      display: inline; 
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    [data-doc] { display: none; }
+    [data-doc].visible { 
+      display: block; 
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; filter: blur(8px); transform: scale(0.98); }
+      to { opacity: 1; filter: blur(0); transform: scale(1); }
+    }
+
+    /* ===== MOBILE ADAPTIVE ===== */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+      z-index: 200;
+    }
+    .burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 900px), (hover: none) and (pointer: coarse) {
+      .burger { display: flex; }
+
+      .nav-links {
+        position: fixed;
+        top: 0; right: -100%;
+        width: min(280px, 80vw);
+        height: 100vh;
+        background: rgba(10,0,20,0.97);
+        backdrop-filter: blur(20px);
+        border-left: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 1.5rem 2rem;
+        gap: 0.5rem !important;
+        transition: right 0.35s cubic-bezier(.22,1,.36,1);
+        z-index: 150;
+      }
+      .nav-links.open { right: 0; }
+
+      .nav-links a {
+        font-size: 1rem !important;
+        padding: 0.6rem 0;
+        width: 100%;
+        border-bottom: 1px solid rgba(160,100,255,0.1);
+      }
+
+      .nav-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 140;
+      }
+      .nav-overlay.open { display: block; }
+
+      /* General layout fixes */
+      .hero { padding-top: 5rem !important; }
+      .section, .wrapper { padding-left: 1rem !important; padding-right: 1rem !important; }
+      h1 { font-size: clamp(1.6rem, 5vw, 2.5rem) !important; }
+      .features-grid, .grid, .support-grid { grid-template-columns: 1fr !important; }
+      .stats { flex-direction: column; align-items: center; }
+      .stat { min-width: 140px; }
+      .hero-btns { flex-direction: column; align-items: stretch !important; }
+      .hero-btns a, .hero-btns button { text-align: center; }
+      .formats-grid { gap: 0.4rem !important; }
+
+      /* Commands page table */
+      table { font-size: 0.82rem; }
+      td, th { padding: 0.5rem 0.6rem !important; }
+    }
+
+  </style>
 </head>
 <body class="lang-ru">
+
+<!-- NAV -->
 <nav>
-  <a class="nav-logo" href="general.html">VoiceScribe</a>
-  <button aria-expanded="false" aria-label="Меню" class="burger" title="Открыть меню" type="button">
+  <a href="general.html" class="nav-logo">VoiceScribe</a>
+  <button class="burger" aria-label="Меню" onclick="toggleNav(this)">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-overlay"></div>
+  <div class="nav-overlay" onclick="closeNav()"></div>
   <div class="nav-links">
-    <a class="nav-pro" href="pro.html">Pro</a>
+    <a href="legal.html" class="nav-legal">Документы</a>
     <a href="commands.html">Команды</a>
-    <a class="nav-legal active" href="legal.html">Документы</a>
-    <a href="general.html#features">Функции</a>
-    <a href="general.html#how">Как работает</a>
-    <a class="nav-btn" href="https://discord.com/oauth2/authorize?client_id=1499474116049371156" rel="noopener noreferrer" target="_blank">Добавить бота</a>
+    <a href="premium.html">Premium</a>
+    <a href="general.html">Главная</a>
+    <a href="https://discord.com/oauth2/authorize?client_id=1499474116049371156" target="_blank" rel="noopener" class="nav-btn-animated">Добавить бота</a>
   </div>
 </nav>
 
-<div class="wrapper" role="main">
+<div class="wrapper">
+
   <!-- PAGE HEADER -->
   <div class="page-header">
     <div class="page-tag">
       <span data-lang="ru">Правовые документы</span>
       <span data-lang="en">Legal Documents</span>
+      <span data-lang="de">Rechtliche Dokumente</span>
+      <span data-lang="it">Documenti legali</span>
     </div>
     <h1 class="page-title">
-      <span data-lang="ru">Политика &amp; Условия</span>
-      <span data-lang="en">Policy &amp; Terms</span>
+      <span data-lang="ru">Политика & Условия</span>
+      <span data-lang="en">Policy & Terms</span>
+      <span data-lang="de">Richtlinien & Bedingungen</span>
+      <span data-lang="it">Informativa & Termini</span>
     </h1>
     <p class="page-sub">
       <span data-lang="ru">Всё прозрачно — читайте, как мы работаем с вашими данными</span>
       <span data-lang="en">Full transparency — learn how we handle your data</span>
+      <span data-lang="de">Volle Transparenz — Erfahre, wie wir deine Daten verarbeiten</span>
+      <span data-lang="it">Massima trasparenza — Scopri come gestiamo i tuoi dati</span>
     </p>
   </div>
 
   <!-- TAB BAR -->
   <div class="tab-bar">
-    <button class="tab-btn active" data-tab="privacy" onclick="switchTab('privacy')">
+    <button class="tab-btn active" onclick="switchTab('privacy')">
       <span data-lang="ru">🔒 Политика конфиденциальности</span>
       <span data-lang="en">🔒 Privacy Policy</span>
+      <span data-lang="de">🔒 Datenschutzerklärung</span>
+      <span data-lang="it">🔒 Informativa sulla privacy</span>
     </button>
-    <button class="tab-btn" data-tab="terms" onclick="switchTab('terms')">
+    <button class="tab-btn" onclick="switchTab('terms')">
       <span data-lang="ru">📋 Условия использования</span>
       <span data-lang="en">📋 Terms of Service</span>
+      <span data-lang="de">📋 Nutzungsbedingungen</span>
+      <span data-lang="it">📋 Termini di servizio</span>
     </button>
   </div>
 
@@ -66,6 +480,7 @@
   ════════════════════════════════════ -->
   <div data-doc="privacy" class="visible">
     <div class="doc-card">
+
       <!-- RU -->
       <div data-lang="ru">
         <div class="doc-date">Дата вступления в силу: 13 мая 2026 г.</div>
@@ -136,6 +551,7 @@
           <h3>8. Изменения политики</h3>
           <p>Мы оставляем за собой право обновлять настоящую политику. Актуальная версия всегда доступна на этой странице.</p>
         </div>
+
       </div>
 
       <!-- EN -->
@@ -208,15 +624,165 @@
           <h3>8. Policy Changes</h3>
           <p>We reserve the right to update this policy. The current version is always available on this page.</p>
         </div>
+
       </div>
+
+      <!-- DE -->
+      <div data-lang="de">
+        <div class="doc-date">Datum des Inkrafttretens: 13. Mai 2026</div>
+
+        <div class="doc-section">
+          <h3>1. Einleitung</h3>
+          <p>Diese Datenschutzerklärung beschreibt, wie VoiceScribe („der Bot“, „wir“) Discord-Nutzerdaten bei der Nutzung unseres Transkriptionsdienstes erhebt, nutzt und schützt.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>2. Welche Daten wir verarbeiten</h3>
+          <p>Im Betrieb kann der Bot folgende Daten verarbeiten:</p>
+          <ul>
+            <li>Sprachnachrichten und Audiodateien zur Transkription;</li>
+            <li>Discord User-ID und Server-ID zur Identifizierung;</li>
+            <li>Metadaten von Nachrichten (Zeitstempel, Kanal-ID);</li>
+            <li>Technische Betriebsprotokolle zur Fehlerbehebung und Verbesserung.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>3. Wie wir Daten verwenden</h3>
+          <p>Erhobene Daten werden ausschließlich verwendet für:</p>
+          <ul>
+            <li>Transkription von Audio in Text und Rückgabe des Ergebnisses;</li>
+            <li>Verbesserung der Servicequalität;</li>
+            <li>Fehlerdiagnose und technischer Support;</li>
+            <li>Einhaltung der Discord-API-Richtlinien und geltender Gesetze.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>4. Datenspeicherung und Löschung</h3>
+          <p>Audiodateien werden nicht länger auf Servern gespeichert als für die Transkription erforderlich. Nach der Bereitstellung werden Audiodaten automatisch gelöscht.</p>
+          <p>Technische Protokolle werden maximal 30 Tage aufbewahrt.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>5. Weitergabe an Dritte</h3>
+          <p>Wir verkaufen oder übertragen keine Daten an Dritte. Die Audioverarbeitung erfolgt über verschlüsselte Spracherkennungs-APIs und wird vom Anbieter nicht über die Anfrage hinaus gespeichert.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>6. Sicherheit</h3>
+          <p>Wir setzen technische Sicherheitsmaßnahmen ein (Verschlüsselung bei der Übertragung, Zugriffskontrollen), um unbefugten Zugriff zu verhindern.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>7. Deine Rechte</h3>
+          <p>Du kannst den Bot jederzeit vom Server entfernen, um die Datenverarbeitung zu beenden. Für Löschanfragen kontaktiere uns bitte.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>8. Änderungen der Richtlinie</h3>
+          <p>Wir behalten uns das Recht vor, diese Richtlinie zu aktualisieren. Die aktuelle Version ist stets auf dieser Seite verfügbar.</p>
+        </div>
+
+      </div>
+
+      <!-- IT -->
+      <div data-lang="it">
+        <div class="doc-date">Data di entrata in vigore: 13 maggio 2026</div>
+
+        <div class="doc-section">
+          <h3>1. Introduzione</h3>
+          <p>La presente Informativa sulla privacy descrive come VoiceScribe ("il Bot", "noi") raccoglie, utilizza e protegge i dati degli utenti Discord durante l'utilizzo del servizio di trascrizione vocale.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>2. Dati trattati</h3>
+          <p>Durante il funzionamento, il bot può elaborare i seguenti dati:</p>
+          <ul>
+            <li>Messaggi vocali e file audio inviati per la trascrizione;</li>
+            <li>Discord User ID e Server ID per l'identificazione delle richieste;</li>
+            <li>Metadati dei messaggi (data e ora, ID canale);</li>
+            <li>Log operativi tecnici per il debug e il miglioramento del servizio.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>3. Come utilizziamo i dati</h3>
+          <p>I dati raccolti vengono utilizzati esclusivamente per:</p>
+          <ul>
+            <li>Trascrivere audio in testo e restituire il risultato all'utente;</li>
+            <li>Migliorare la qualità del servizio;</li>
+            <li>Diagnosi degli errori e supporto tecnico;</li>
+            <li>Rispetto delle linee guida delle API di Discord e delle normative vigenti.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>4. Conservazione e cancellazione dei dati</h3>
+          <p>I file audio non vengono conservati sui server di VoiceScribe oltre il tempo strettamente necessario per l'elaborazione. Una volta fornita la risposta, i dati audio vengono eliminati automaticamente.</p>
+          <p>I log tecnici vengono conservati per un massimo di 30 giorni.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>5. Condivisione con terze parti</h3>
+          <p>Non vendiamo né trasferiamo i tuoi dati a terzi. L'elaborazione audio avviene tramite API di riconoscimento vocale crittografate, senza ulteriore conservazione da parte del provider.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>6. Sicurezza</h3>
+          <p>Applichiamo misure di sicurezza tecniche (crittografia in transito, controlli di accesso) per prevenire accessi non autorizzati.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>7. I tuoi diritti</h3>
+          <p>Puoi rimuovere il bot dal tuo server in qualsiasi momento per interrompere il trattamento dei dati. Per richiedere la cancellazione di dati specifici, contattaci.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>8. Modifiche all'informativa</h3>
+          <p>Ci riserviamo il diritto di aggiornare questa informativa. La versione corrente è sempre consultabile su questa pagina.</p>
+        </div>
+
+      </div>
+
     </div>
   </div><!-- /privacy -->
+
 
   <!-- ════════════════════════════════════
        TERMS OF SERVICE
   ════════════════════════════════════ -->
   <div data-doc="terms">
     <div class="doc-card">
+
       <!-- RU -->
       <div data-lang="ru">
         <div class="doc-date">Дата вступления в силу: 13 мая 2026 г.</div>
@@ -276,8 +842,9 @@
 
         <div class="doc-section">
           <h3>7. Изменения условий</h3>
-          <p>Условия могут обновляться в любое время. Актуальная версия всегда доступна на данной странице. Продолжение использования бота после публикации изменений означает согласие с ними.</p>
+          <p>Условия могут обновляться в любое время. Актуальная версия всегда доступна на этой странице. Продолжение использования бота после публикации изменений означает их принятие.</p>
         </div>
+
       </div>
 
       <!-- EN -->
@@ -286,14 +853,14 @@
 
         <div class="doc-section">
           <h3>1. Acceptance of Terms</h3>
-          <p>By using VoiceScribe, you agree to these Terms of Service. If you do not agree with any provision, please stop using the bot.</p>
+          <p>By using VoiceScribe, you agree to these Terms of Service. If you do not agree with any part of these terms, please discontinue using the bot.</p>
         </div>
 
         <div class="divider"></div>
 
         <div class="doc-section">
-          <h3>2. Service Description</h3>
-          <p>VoiceScribe is a Discord bot that converts voice messages and audio files to text using speech recognition technology. The service is provided "as is" without a guarantee of 100% transcription accuracy.</p>
+          <h3>2. Description of Service</h3>
+          <p>VoiceScribe is a Discord bot that converts voice messages and audio files into text using speech recognition technology. The service is provided "as is" without warranty of 100% transcription accuracy.</p>
         </div>
 
         <div class="divider"></div>
@@ -302,8 +869,8 @@
           <h3>3. Acceptable Use</h3>
           <p>You agree to use the bot only for lawful purposes and not to:</p>
           <ul>
-            <li>Transmit materials that infringe copyright or contain unlawful content;</li>
-            <li>Use the bot for mass automated request submission (spam);</li>
+            <li>Submit material that infringes copyright or contains illegal content;</li>
+            <li>Use the bot for automated mass-requesting (spam);</li>
             <li>Attempt to hack, reverse-engineer, or disrupt the service;</li>
             <li>Violate Discord's Terms of Service.</li>
           </ul>
@@ -313,11 +880,11 @@
 
         <div class="doc-section">
           <h3>4. Limitation of Liability</h3>
-          <p>VoiceScribe and its developer are not liable for:</p>
+          <p>VoiceScribe and its developer shall not be held liable for:</p>
           <ul>
-            <li>Inaccuracies or errors in transcription;</li>
-            <li>Temporary service unavailability;</li>
-            <li>Any damages arising from use or inability to use the bot.</li>
+            <li>Inaccuracies or errors in transcriptions;</li>
+            <li>Temporary service interruptions;</li>
+            <li>Any damages arising from the use or inability to use the bot.</li>
           </ul>
         </div>
 
@@ -341,14 +908,147 @@
           <h3>7. Changes to Terms</h3>
           <p>Terms may be updated at any time. The current version is always available on this page. Continued use of the bot after changes are published constitutes acceptance of those changes.</p>
         </div>
+
       </div>
+
+      <!-- DE -->
+      <div data-lang="de">
+        <div class="doc-date">Datum des Inkrafttretens: 13. Mai 2026</div>
+
+        <div class="doc-section">
+          <h3>1. Annahme der Bedingungen</h3>
+          <p>Durch die Nutzung von VoiceScribe erklärst du dich mit diesen Nutzungsbedingungen einverstanden. Falls du mit Teilen nicht einverstanden bist, stelle die Nutzung des Bots bitte ein.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>2. Beschreibung des Dienstes</h3>
+          <p>VoiceScribe ist ein Discord-Bot, der Sprachnachrichten und Audiodateien mithilfe von Spracherkennungstechnologie in Text umwandelt. Der Dienst wird „wie besehen“ ohne Gewähr für eine 100%ige Genauigkeit bereitgestellt.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>3. Zulässige Nutzung</h3>
+          <p>Du verpflichtest dich, den Bot nur für rechtmäßige Zwecke zu nutzen und nicht:</p>
+          <ul>
+            <li>Urheberrechtlich geschütztes oder rechtswidriges Material einzureichen;</li>
+            <li>Den Bot für automatisierte Massenanfragen (Spam) zu missbrauchen;</li>
+            <li>Hacking, Reverse Engineering oder Störungen zu versuchen;</li>
+            <li>Gegen die Discord-Nutzungsbedingungen zu verstoßen.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>4. Haftungsbeschränkung</h3>
+          <p>VoiceScribe und der Entwickler haften nicht für:</p>
+          <ul>
+            <li>Ungenauigkeiten oder Fehler in Transkriptionen;</li>
+            <li>Vorübergehende Dienstunterbrechungen;</li>
+            <li>Jegliche Schäden aus der Nutzung oder Nichtverfügbarkeit des Bots.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>5. Geistiges Eigentum</h3>
+          <p>Alle Rechte am Bot, Code und Design verbleiben beim Entwickler. Nutzung, Vervielfältigung oder Verbreitung ohne schriftliche Genehmigung ist untersagt.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>6. Kündigung des Zugriffs</h3>
+          <p>Wir behalten uns das Recht vor, den Zugriff von Nutzern oder Servern bei Verstößen ohne Vorankündigung zu sperren.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>7. Änderungen der Bedingungen</h3>
+          <p>Die Bedingungen können jederzeit aktualisiert werden. Die fortgesetzte Nutzung nach Änderungen gilt als Zustimmung.</p>
+        </div>
+
+      </div>
+
+      <!-- IT -->
+      <div data-lang="it">
+        <div class="doc-date">Data di entrata in vigore: 13 maggio 2026</div>
+
+        <div class="doc-section">
+          <h3>1. Accettazione dei termini</h3>
+          <p>Utilizzando VoiceScribe, accetti i presenti Termini di servizio. Se non concordi con essi, ti invitiamo a interrompere l'uso del bot.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>2. Descrizione del servizio</h3>
+          <p>VoiceScribe è un bot Discord che converte messaggi vocali e file audio in testo tramite tecnologia di riconoscimento vocale. Il servizio è fornito "così com'è", senza garanzia di accuratezza al 100%.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>3. Uso consentito</h3>
+          <p>Ti impegni a utilizzare il bot solo per scopi leciti e a non:</p>
+          <ul>
+            <li>Trasmettere contenuti che violino il copyright o siano illegali;</li>
+            <li>Usare il bot per spam o richieste massive automatizzate;</li>
+            <li>Tentare manomissioni, reverse engineering o interruzioni del servizio;</li>
+            <li>Violare i Termini di servizio di Discord.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>4. Limitazione di responsabilità</h3>
+          <p>VoiceScribe e il suo sviluppatore non sono responsabili per:</p>
+          <ul>
+            <li>Imprecisioni o errori nelle trascrizioni;</li>
+            <li>Temporanea indisponibilità del servizio;</li>
+            <li>Eventuali danni derivanti dall'uso o dall'impossibilità di usare il bot.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>5. Proprietà intellettuale</h3>
+          <p>Tutti i diritti sul bot, sul codice e sul design appartengono allo sviluppatore. L'uso, la copia o la distribuzione senza autorizzazione scritta sono vietati.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>6. Interruzione dell'accesso</h3>
+          <p>Ci riserviamo il diritto di bloccare l'accesso al bot per utenti o server in caso di violazione dei termini, senza preavviso.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="doc-section">
+          <h3>7. Modifiche ai termini</h3>
+          <p>I termini possono essere aggiornati in qualsiasi momento. L'uso continuato del bot dopo le modifiche costituisce accettazione delle stesse.</p>
+        </div>
+
+      </div>
+
     </div>
   </div><!-- /terms -->
+
 </div><!-- /wrapper -->
 
 <footer>
   <div class="footer-main">VoiceScribe · Разработан <a href="https://quger.github.io">Quger</a> · 2026</div>
   <div class="footer-disclaimer">Мы не являемся аффилированным лицом компании Discord Inc.</div>
 </footer>
+
+<script src="site.js"></script>
 </body>
 </html>
