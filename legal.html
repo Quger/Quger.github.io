@@ -473,6 +473,7 @@
     }
 
   </style>
+  <script defer src="site.js"></script>
 </head>
 <body class="lang-ru">
 
@@ -523,11 +524,6 @@
   </div>
 
   <!-- LANG TOGGLE -->
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('ru')">РУ</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
-  </div>
-
   <!-- ════════════════════════════════════
        PRIVACY POLICY
   ════════════════════════════════════ -->
@@ -837,17 +833,7 @@
     });
   }
 
-  function setLang(lang) {
-    document.body.className = document.body.className
-      .replace(/lang-\w+/, '').trim() + ' lang-' + lang;
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active',
-        (lang === 'ru' && btn.textContent.trim() === 'РУ') ||
-        (lang === 'en' && btn.textContent.trim() === 'EN')
-      );
-    });
-    document.documentElement.lang = lang;
-  }
+
 </script>
 
   <script>

@@ -208,6 +208,7 @@
     }
 
   </style>
+  <script defer src="site.js"></script>
 </head>
 <body class="lang-ru">
 <nav>
@@ -230,10 +231,6 @@
       <span data-lang="ru">Команды бота</span>
       <span data-lang="en">Bot Commands</span>
     </h1>
-  </div>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('ru')">РУ</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
   </div>
   <div class="doc-card">
     <div class="cmd-item">
@@ -305,15 +302,6 @@
   <div class="footer-main">VoiceScribe · Разработан <a href="https://quger.github.io">Quger</a> · 2026</div>
   <div class="footer-disclaimer">Мы не являемся аффилированным лицом компании Discord Inc.</div>
 </footer>
-<script>
-  function setLang(lang) {
-    document.body.className = 'lang-' + lang;
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', (lang === 'ru' && btn.textContent === 'РУ') || (lang === 'en' && btn.textContent === 'EN'));
-    });
-  }
-</script>
-
   <script>
     function toggleNav(btn) {
       btn.classList.toggle('open');
