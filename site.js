@@ -372,6 +372,13 @@
     var dict = translations[lang] || translations.en;
     if (!dict) return;
 
+    // Explicit keys are used for UI fragments where text can be nested or
+    // changed by markup. They are more reliable than matching all text nodes.
+    document.querySelectorAll('[data-i18n]').forEach(function (element) {
+      var key = element.getAttribute('data-i18n');
+      if (key && dict[key]) element.textContent = dict[key];
+    });
+
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
