@@ -480,7 +480,9 @@
     document.addEventListener('click', function (e) {
       var burger = e.target.closest('.burger');
       if (burger) {
-        window.toggleNav(burger);
+        // Buttons with an inline onclick already toggled the navigation before
+        // this delegated click handler runs.
+        if (!burger.hasAttribute('onclick')) window.toggleNav(burger);
         return;
       }
       var overlay = e.target.closest('.nav-overlay');
